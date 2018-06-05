@@ -1,5 +1,6 @@
 import math from 'mathjs';
 import * as data from './data';
+import Passenger from './types/Passenger';
 
 describe('import', () => {
   const promise = data.importData('data/train.csv');
@@ -62,10 +63,14 @@ describe('helper functions', () => {
     const scaled = data.scale(A);
     expect(scaled).toEqual(expectedMatrix);
   });
-  it('convertToMatrix should convert to matrix', () => {
-    // 1,0,3,"Braund, Mr. Owen Harris",male,22,1,0,A/5 21171,7.25,,S
-    // 2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38,1,0,PC 17599,71.2833,C85,C
-
-    const passenger1 = new data.Passenger();
+  it('convertToMatrix should convert to feature matrix', () => {
+    const csvRow1 = [1, 0, 3, 'Braund, Mr. Owen Harris', 'male', 22, 1, 0, 'A/5 21171', 7.25, '', 'S'];
+    const csvRow2 = [2, 1, 1, 'Cumings, Mrs. John Bradley (Florence Briggs Thayer)', 'female', 38, 1, 0,
+      'PC 17599', 71.2833, 'C85', 'C'];
+    const passenger1 = new Passenger(csvRow1);
+    const passenger2 = new Passenger(csvRow2);
+    const expectedMatrix = [passenger1.features(), passenger2.features()];
+    const matrix = data.convertToMatrix([passenger1, passenger2]);
+    expect(matrix).toEqual(expectedMatrix);
   });
 });
