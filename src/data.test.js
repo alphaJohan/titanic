@@ -37,28 +37,28 @@ describe('helper functions', () => {
   });
   it('normalize() should normalize', () => {
     const A = math.matrix([
-      [1, 5],
-      [5, 10],
+      [1, 5, 0],
+      [5, 10, 1],
     ]);
     // (x - mean(x)) / (max(x) - min(x))
     const expectedMatrix = math.matrix([
-      [-0.5, -0.5],
-      [0.5, 0.5],
+      [-0.5, -0.5, -0.5],
+      [0.5, 0.5, 0.5],
     ]);
     const normalized = data.normalize(A);
     expect(normalized).toEqual(expectedMatrix);
   });
   it('scale() should re-scale', () => {
     const A = math.matrix([
-      [1, 5],
-      [3, 6],
-      [5, 10],
+      [1, 5, 0],
+      [3, 6, 0],
+      [5, 10, 1],
     ]);
     // (x - min(x)) / (max(x) - min(x))
     const expectedMatrix = math.matrix([
-      [0, 0],
-      [0.5, 0.2],
-      [1, 1],
+      [0, 0, 0],
+      [0.5, 0.2, 0],
+      [1, 1, 1],
     ]);
     const scaled = data.scale(A);
     expect(scaled).toEqual(expectedMatrix);
@@ -73,4 +73,20 @@ describe('helper functions', () => {
     const matrix = data.convertToMatrix([passenger1, passenger2]);
     expect(matrix).toEqual(expectedMatrix);
   });
+  /* it('normalize test', () => {
+    const A = [
+      [3, 1, 22, 1, 0],
+      [1, 0, 38, 0, 1],
+    ];
+    const normalized = data.normalize(math.matrix(A));
+    expect(normalized).toEqual([]);
+  });
+  it('scale test', () => {
+    const A = [
+      [3, 1, 22, 1, 0],
+      [1, 0, 38, 0, 1],
+    ];
+    const scaled = data.scale(math.matrix(A));
+    expect(scaled).toEqual([]);
+  }); */
 });
