@@ -62,4 +62,10 @@ describe('helper functions', () => {
     const scaled = data.scale(A);
     expect(scaled).toEqual(expectedMatrix);
   });
+  it('convertToMatrix should convert to matrix', () => {
+    // 1,0,3,"Braund, Mr. Owen Harris",male,22,1,0,A/5 21171,7.25,,S
+    // 2,1,1,"Cumings, Mrs. John Bradley (Florence Briggs Thayer)",female,38,1,0,PC 17599,71.2833,C85,C
+
+    const passenger1 = new data.Passenger();
+  });
 });

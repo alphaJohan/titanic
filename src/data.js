@@ -1,42 +1,6 @@
 import csv from 'csvtojson';
 import math from 'mathjs';
-
-class Passenger {
-  constructor(trainData) {
-    [
-      this.passengerId,
-      this.survived,
-      this.class,
-      this.name,
-      this.sex,
-      this.age,
-      this.sibsp,
-      this.parch,
-      this.ticket,
-      this.fare,
-      this.cabin,
-      this.embarked,
-    ] = trainData;
-  }
-
-  sexAsInt() {
-    return this.sex === 'male' ? 1 : 0;
-  }
-
-  features() {
-    return [
-      Number.parseFloat(this.class),
-      Number.parseFloat(this.sexAsInt()),
-      Number.parseFloat(this.age),
-      Number.parseFloat(this.sibsp),
-      Number.parseFloat(this.parch),
-    ];
-  }
-
-  y() {
-    return [Number.parseFloat(this.survived)];
-  }
-}
+import Passenger from './types/Passenger';
 
 const getColumn = (A, colIndex) => {
   const size = A.size();
@@ -63,7 +27,11 @@ const importData = fileName => new Promise((resolve) => {
 });
 
 const convertToMatrix = (passengers) => {
-
+  const features = [];
+  passengers.forEach((passenger) => {
+    features.push(passenger.features());
+  });
+  return features;
 };
 
 const normalize = (matrix) => {
@@ -72,7 +40,6 @@ const normalize = (matrix) => {
   for (let i = 0; i < columns; i += 1) {
     const column = getColumn(matrix, i);
     const scaledColumn = math.divide(math.subtract(column, math.mean(column)), (math.max(column) - math.min(column)));
-    // console.log(scaledColumn);
     setColumn(B, scaledColumn, i);
   }
   return B;
@@ -84,14 +51,12 @@ const scale = (matrix) => {
   for (let i = 0; i < columns; i += 1) {
     const column = getColumn(matrix, i);
     const scaledColumn = math.divide(math.subtract(column, math.min(column)), (math.max(column) - math.min(column)));
-    // console.log(scaledColumn);
     setColumn(B, scaledColumn, i);
   }
   return B;
 };
 
 export {
-  Passenger,
   importData,
   convertToMatrix,
   normalize,
