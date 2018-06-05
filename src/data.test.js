@@ -13,13 +13,22 @@ describe('import', () => {
 });
 
 describe('helper functions', () => {
-  it('getColumn() should return column matrix of matrix', () => {
+  it('getColumn() should return column 1 matrix of matrix', () => {
     const A = math.matrix([
       [1, 3],
       [5, 10],
     ]);
     const expectedColumn = math.matrix([[3], [10]]);
     const column = data.getColumn(A, 1);
+    expect(column).toEqual(expectedColumn);
+  });
+  it('getColumn() should return column 0 matrix of matrix', () => {
+    const A = math.matrix([
+      [1, 3],
+      [5, 10],
+    ]);
+    const expectedColumn = math.matrix([[1], [5]]);
+    const column = data.getColumn(A, 0);
     expect(column).toEqual(expectedColumn);
   });
   it('setColumn() should set column in matrix', () => {
@@ -34,6 +43,58 @@ describe('helper functions', () => {
     ]);
     data.setColumn(A, column, 1);
     expect(A).toEqual(expectedMatrix);
+  });
+  it('getRows() should get the first row in matrix', () => {
+    const A = math.matrix([
+      [1, 3],
+      [5, 10],
+      [3, 5],
+    ]);
+    const expectedMatrix = math.matrix([
+      [1, 3],
+    ]);
+    const B = data.getRows(A, 0);
+    expect(B).toEqual(expectedMatrix);
+  });
+  it('getRows() should get the middle row in matrix', () => {
+    const A = math.matrix([
+      [1, 3],
+      [5, 10],
+      [3, 5],
+    ]);
+    const expectedMatrix = math.matrix([
+      [5, 10],
+    ]);
+    const B = data.getRows(A, 1);
+    expect(B).toEqual(expectedMatrix);
+  });
+  it('getRows() should get two first rows in matrix', () => {
+    const A = math.matrix([
+      [1, 3],
+      [5, 10],
+      [3, 5],
+      [2, 2],
+    ]);
+    const expectedMatrix = math.matrix([
+      [1, 3],
+      [5, 10],
+    ]);
+    const B = data.getRows(A, 0, 1);
+    expect(B).toEqual(expectedMatrix);
+  });
+  it('getRows() should get rows in the middle of the matrix', () => {
+    const A = math.matrix([
+      [1, 3],
+      [5, 10],
+      [3, 5],
+      [2, 2],
+    ]);
+    const expectedMatrix = math.matrix([
+      [5, 10],
+      [3, 5],
+    ]);
+    const B = data.getRows(A, 1, 2);
+    expect(B).toEqual(expectedMatrix);
   });
   it('normalize() should normalize', () => {
     const A = math.matrix([

@@ -2,6 +2,22 @@ import csv from 'csvtojson';
 import math from 'mathjs';
 import Passenger from './types/Passenger';
 
+/**
+ *
+ * @param A - the matrix
+ * @param startIndex - index of the first row to return
+ * @param endIndex - index of the last row to return
+ * @return {math.MathArray | math.Matrix | string}
+ */
+const getRows = (A, startIndex, endIndex = undefined) => {
+  const size = A.size();
+  const columnCount = size[1];
+  if (endIndex === undefined) {
+    return math.subset(A, math.index(startIndex, math.range(0, columnCount)));
+  }
+  return math.subset(A, math.index(math.range(startIndex, endIndex + 1), math.range(0, columnCount)));
+};
+
 const getColumn = (A, colIndex) => {
   const size = A.size();
   const rowCount = size[0];
@@ -60,6 +76,7 @@ export {
   importData,
   convertToMatrix,
   normalize,
+  getRows,
   getColumn,
   setColumn,
   scale,
